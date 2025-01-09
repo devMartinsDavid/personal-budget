@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -8,6 +7,5 @@ import { Component } from '@angular/core';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
-  logo:string = "assets/images/logo.png";
 
 }

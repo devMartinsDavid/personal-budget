@@ -5,7 +5,12 @@ import { ConsultationComponent } from './pages/consultation/consultation.compone
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
-    {path:'consultation', component: ConsultationComponent},
-    { path: 'sum', component: SumComponent },
+    {
+        path:'consultation',
+        loadComponent: ()=> import('./pages/consultation/consultation.component').then(c => c.ConsultationComponent)
+    },
+    { path: 'sum',
+        loadComponent: ()=> import('./pages/sum/sum.component').then(c => c.SumComponent)
+    },
     {path: '**', redirectTo: ''}
 ];
