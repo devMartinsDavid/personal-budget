@@ -12,14 +12,12 @@ export class DbService {
     return nextId ? parseInt(nextId, 10) + 1 : 1;
   }
 
-  // Grava uma nova despesa no localStorage
   grave(expense: Expense): void {
     const id = this.getNextId();
     localStorage.setItem(id.toString(), JSON.stringify(expense));
     localStorage.setItem('id', id.toString());
   }
 
-  // Recupera todas as despesas armazenadas no localStorage
   retrieveAllRecords(): Expense[] {
     const expenses: Expense[] = [];
     const id = localStorage.getItem('id');
@@ -38,7 +36,6 @@ export class DbService {
     return expenses;
   }
 
-  // Pesquisa despesas com base nos filtros fornecidos
   search(filters: Partial<Expense>): Expense[] {
     const allRecords = this.retrieveAllRecords();
     return allRecords.filter(expense => {
@@ -48,7 +45,6 @@ export class DbService {
     });
   }
 
-  // Remove uma despesa pelo ID
   remove(id: number): void {
     localStorage.removeItem(id.toString());
   }

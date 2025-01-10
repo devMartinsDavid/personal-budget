@@ -6,40 +6,11 @@
             </div>
         </div>
 
-        <form id="formDespesas" class="row body-form-mobile">
-            <div class="col-sm-12 mb-3">
-                <label for="data">Data:</label>
-                <input type="date" id="data" class="form-control" value="">
-            </div>
-
-            <div class="col-sm-8 mb-3">
-                <label for="tipo">Tipo:</label>
-                <select class="form-control" id="tipo">
-                    <option value="">Selecione o tipo</option>
-                    <option value="1">Alimentação</option>
-                    <option value="2">Educação</option>
-                    <option value="3">Lazer</option>
-                    <option value="4">Saúde</option>
-                    <option value="5">Transporte</option>
-                </select>
-            </div>
-
-            <div class="col-sm-12 mb-3">
-                <label for="descricao">Descrição:</label>
-                <input type="text" class="form-control" placeholder="Descrição" id="descricao" />
-            </div>
-
-            <div class="col-sm-6 mb-3">
-                <label for="valor">Valor R$:</label>
-                <input type="text" class="form-control" placeholder="Valor R$" id="valor" />
-            </div>
-
-            <div class="col-sm-6 d-flex align-items-center">
-                <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-plus"></i> Adicionar
-                </button>
-            </div>
-        </form>
+        <app-form
+            [fields]="fields"
+            (submitForm)="onSubmitForm($event)"
+            submitLabel="Adicionar"
+        ></app-form>
     </div>
 </main>
 
