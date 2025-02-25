@@ -1,16 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CurrencyMaskDirective } from './currency-mask.directive';
+import { CurrencyFormatDirective } from './currency-Formt.directive';
+// import { CurrencyPipe } from './format-currency.pipe';
 
 
 
 @NgModule({
-  declarations: [CurrencyMaskDirective],
+  declarations: [CurrencyFormatDirective],
   imports: [
     CommonModule
   ],
   exports:[
-    CurrencyMaskDirective
+    CurrencyFormatDirective,
   ]
 })
 export class UtilsModule { }
