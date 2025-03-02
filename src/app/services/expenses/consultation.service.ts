@@ -14,29 +14,53 @@ export class ConsultationService {
      * @param filters Objeto com os campos e valores para filtrar.
      * @returns Array de despesas que correspondem aos filtros.
      */
-    search(filters: Partial<Expense>): Expense[] {
-      return this.getAll().filter(expense =>
-        Object.keys(filters).every(key =>
-          expense[key as keyof Expense]?.toString().includes(filters[key as keyof Expense]?.toString() || '')
-        )
-      );
+  /**
+* Realiza uma busca de despesas com base nos filtros fornecidos.
+*/
+search(filters: Partial<Expense>): Expense[] {
+  const allRecords = this.retrieveAllRecords();
+
+  return allRecords.filter(expense => {
+    return Object.keys(filters).every(key => {
+      const filterValue = filters[key as keyof Expense];
+      const expenseValue = expense[key as keyof Expense];
+
+      if (!filterValue) {
+        return true; // Se o filtro estiver vazio, mantém o registro
+      }
+
+      if (key === 'date') {
+        // Normaliza a data para formato YYYY-MM-DD
+        const filterDate = new Date(filterValue as string).toISOString().split('T')[0];
+        const expenseDate = new Date(expenseValue as string).toISOString().split('T')[0];
+
+        return filterDate === expenseDate;
+      }
+
+      if (typeof filterValue === 'string') {
+        return (expenseValue as string).toLowerCase().includes(filterValue.toLowerCase());
+      }
+
+      return expenseValue === filterValue;
+      });
+    });
+  }
+
+  retrieveAllRecords(): Expense[] {
+    const expenses: Expense[] = [];
+    const id = localStorage.getItem('id');
+    const maxId = id ? parseInt(id, 10) : 0;
+
+    for (let i = 1; i <= maxId; i++) {
+      const expense = JSON.parse(localStorage.getItem(i.toString()) || 'null') as Expense;
+      if (expense === null) {
+        continue;
+      }
+      expense.id = i; // Adiciona o ID ao objeto de despesa
+      expenses.push(expense);
     }
 
-    retrieveAllRecords(): Expense[] {
-      const expenses: Expense[] = [];
-      const id = localStorage.getItem('id');
-      const maxId = id ? parseInt(id, 10) : 0;
-  
-      for (let i = 1; i <= maxId; i++) {
-        const expense = JSON.parse(localStorage.getItem(i.toString()) || 'null') as Expense;
-        if (expense === null) {
-          continue;
-        }
-        expense.id = i; // Adiciona o ID ao objeto de despesa
-        expenses.push(expense);
-      }
-  
-      console.log('Despesas recuperadas:', expenses);
-      return expenses;
-    }
+    console.log('Despesas recuperadas:', expenses);
+    return expenses;
+  }
 }

@@ -1,8 +1,7 @@
-import { ConsultationService } from './../../services/expenses/consultation.service';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
 
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatInputModule } from '@angular/material/input';
@@ -11,9 +10,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 
+
 import { CurrencyMaskModule } from "ng2-currency-mask";
 
+import { Expense } from './../../interfaces/expense.interface';
+
 import { ConsultationService } from '../../services/expenses/consultation.service';
+import { DbService } from '../../services/db/db.service';
 
 
 @Component({
@@ -35,6 +38,11 @@ import { ConsultationService } from '../../services/expenses/consultation.servic
 export class ConsultationComponent implements OnInit {
 
   searchForm!: FormGroup;
+  expenses: Expense[] = [];
+  filteredExpenses: Expense[] = [];
+  iconSearch: string = 'assets/icons/search.svg';
+  currentPage: number = 0;
+  pageSize: number = 5;
 
   // Opções para o campo "type"
   expenseTypes = [
@@ -45,35 +53,72 @@ export class ConsultationComponent implements OnInit {
     { value: 'transporte', label: 'Transporte' },
   ];
 
-  private initForm(): void {
-    this.searchForm = this.fb.group({
-      date: [''], // Campo de data obrigatório
-      type: [''], // Campo de seleção obrigatório
-      description: [''], // Campo de texto obrigatório
-      value: [''], // Validators.pattern(/^\d+(\.\d{1,2})?$/)]]
-    });
-  }
-  private loadExpenses(): void {
-    loadExpenses(): void {
-      this.expenses = this.searchExpense.retrieveAllRecords();
-    }
-  }
 
   constructor(
     private fb: FormBuilder,
-    private searchExpense: ConsultationService
-  ) {}
+    private searchExpense: ConsultationService,
+    private dbService: DbService,
+    private snackBar: MatSnackBar
+  ) { }
+
+  private initForm(): void {
+    this.searchForm = this.fb.group({
+      date: [''],
+      type: [''],
+      description: [''],
+      value: [''],
+    });
+  }
+  private loadAllExpenses(): void {
+    this.expenses = this.searchExpense.retrieveAllRecords();
+    this.applyPagination();
+  }
 
   ngOnInit(): void {
     this.initForm();
-    this.loadExpenses();
+    // Garante que o código só será executado no navegador
+    if (typeof window !== 'undefined') {
+      this.loadAllExpenses();
+    }
   }
-  onSubmit() {
 
-    if (this.searchForm.valid) { console.log(this.searchForm.value); }
-    // Aqui você pode adicionar a lógica para salvar os dados ou enviar para o backend
-    else { console.log('Formulário inválido!'); }
+  applyPagination(): void{
+    const startIndex = this.currentPage * this.pageSize;
+    this.filteredExpenses = this.expenses.slice(startIndex, startIndex + this.pageSize);
+  }
 
+  nextPage(): void {
+    if ((this.currentPage + 1) * this.pageSize < this.expenses.length) {
+      this.currentPage++;
+      this.applyPagination();
+    }
+  }
+
+  prevPage(): void {
+    if (this.currentPage > 0) {
+      this.currentPage--;
+      this.applyPagination();
+    }
+  }
+
+  searchExpenses(): void {
+    const filters = this.searchForm.value;
+    const hasFilters = Object.values(filters).some(value => value); // Verifica se algum campo foi preenchido
+
+    if (!hasFilters) {
+      this.loadAllExpenses(); // Retorna todas as despesas se não houver filtros
+      return;
+    }
+
+    this.expenses = this.searchExpense.search(filters);
+    this.currentPage = 0; // Reseta a página ao buscar
+    this.applyPagination();
+  }
+
+  removeExpense(id:number): void {
+    this.dbService.remove(id);
+    this.loadAllExpenses(); // Recarrega as despesas após a remoção
+    this.snackBar.open('Despesa removida com sucesso!', 'Fechar', { duration: 2000 });
   }
 
 

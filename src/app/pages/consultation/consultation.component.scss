@@ -1,0 +1,22 @@
+.buttom-search {
+    display: inline-block;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.buttom-search:hover {
+    transform: scale(1.2);
+    background-color: #74C0FC;
+}
+
+.fa-magnifying-glass {
+    color: #74C0FC;
+    font-size: auto;
+    transition: color 0.3s ease-in-out;
+}
+
+.buttom-search:hover .fa-magnifying-glass {
+    color: #1E90FF;
+}
