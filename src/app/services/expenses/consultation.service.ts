@@ -30,7 +30,7 @@ search(filters: Partial<Expense>): Expense[] {
       }
 
       if (key === 'date') {
-        // Normaliza a data para formato YYYY-MM-DD
+
         const filterDate = new Date(filterValue as string).toISOString().split('T')[0];
         const expenseDate = new Date(expenseValue as string).toISOString().split('T')[0];
 
@@ -56,7 +56,7 @@ search(filters: Partial<Expense>): Expense[] {
       if (expense === null) {
         continue;
       }
-      expense.id = i; // Adiciona o ID ao objeto de despesa
+      expense.id = i;
       expenses.push(expense);
     }
 
