@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
+import {  Component,  ViewChild, ElementRef } from '@angular/core';
 import { RouterLink } from '@angular/router';
-
 @Component({
   selector: 'app-navbar',
   standalone: true,
@@ -9,5 +8,15 @@ import { RouterLink } from '@angular/router';
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
-  logo:string = "assets/images/logo.png";
+  @ViewChild('navbarCollapse', { static: false }) navbarCollapse!: ElementRef;
+
+  logo:string = "assets/images/logo4.png";
+
+
+  closeMenu() {
+    const navbar = this.navbarCollapse.nativeElement;
+    if (navbar.classList.contains('show')) {
+      navbar.classList.remove('show');
+    }
+  }
 }
