@@ -60,28 +60,30 @@ export class ExpenseFormComponent implements OnInit {
 
   private initForm(): void {
     this.expenseForm = this.fb.group({
-      date: ['', Validators.required], // Campo de data obrigatório
-      type: ['', Validators.required], // Campo de seleção obrigatório
-      description: ['', Validators.required], // Campo de texto obrigatório
-      value: ['', [Validators.required]], // Validators.pattern(/^\d+(\.\d{1,2})?$/)]]
+      date: ['', Validators.required],
+      type: ['', Validators.required],
+      description: ['', Validators.required],
+      value: ['', [Validators.required]],
     });
   }
 
   onSubmit(): void {
     if (this.expenseForm.valid) {
-      const rawValue = this.expenseForm.get('value')?.value; // Pega o valor bruto (sem formatação)
+      const rawValue = this.expenseForm.get('value')?.value;
       const expense: Expense = {
         ...this.expenseForm.value,
         value: parseFloat(rawValue),
 
       };
-      this.dbService.grave(expense); // Salva no serviço
-      this.expenseForm.reset(); // Limpa o formulário
-      this.snackBar.open('Despesa salva com sucesso!', 'Fechar', {
+      this.dbService.grave(expense);
+      this.expenseForm.reset();
+      this.snackBar.open('Despesa salva com sucesso!', 'X', {
         duration: 5000,
+        verticalPosition: 'top',
+        horizontalPosition: 'center',
       });
     } else {
-      this.snackBar.open('Erro ao salvar. Verifique os campos obrigatórios.', 'Fechar', {
+      this.snackBar.open('Erro ao salvar. Verifique os campos obrigatórios.', 'X', {
         duration: 5000,
       });
     }

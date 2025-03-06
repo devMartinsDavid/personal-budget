@@ -5,13 +5,12 @@ import { CurrencyFormatDirective } from './currency-Formt.directive';
 
 
 
+
 @NgModule({
-  declarations: [CurrencyFormatDirective],
+  declarations: [],
   imports: [
     CommonModule
   ],
-  exports:[
-    CurrencyFormatDirective,
-  ]
+  exports:[]
 })
 export class UtilsModule { }
