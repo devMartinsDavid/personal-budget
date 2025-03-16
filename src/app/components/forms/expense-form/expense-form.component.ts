@@ -78,9 +78,10 @@ export class ExpenseFormComponent implements OnInit {
       this.dbService.grave(expense);
       this.expenseForm.reset();
       this.snackBar.open('Despesa salva com sucesso!', 'X', {
-        duration: 5000,
+        duration: 3000,
         verticalPosition: 'top',
         horizontalPosition: 'center',
+        panelClass: ['custom-snackbar']
       });
     } else {
       this.snackBar.open('Erro ao salvar. Verifique os campos obrigatórios.', 'X', {
