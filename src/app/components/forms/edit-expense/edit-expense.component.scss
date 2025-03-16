@@ -1,0 +1,27 @@
+.edit-expense-modal {
+    background-color: #e3f2fd; // Azul clarinho no fundo
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 400px;
+
+    .modal-title {
+        color: #2e7d32; // Verde escuro no título
+        text-align: center;
+        margin-bottom: 16px;
+    }
+
+    mat-form-field {
+        width: 100%;
+        margin-bottom: 12px;
+    }
+
+    .modal-actions {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 16px;
+
+        button {
+            width: 48%;
+        }
+    }
+}

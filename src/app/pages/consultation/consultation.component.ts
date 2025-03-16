@@ -18,6 +18,8 @@ import { Expense } from './../../interfaces/expense.interface';
 
 import { ConsultationService } from '../../services/expenses/consultation.service';
 import { DbService } from '../../services/db/db.service';
+import { MatDialog } from '@angular/material/dialog';
+import { EditExpenseComponent } from '../../components/forms/edit-expense/edit-expense.component';
 
 
 @Component({
@@ -41,6 +43,7 @@ export class ConsultationComponent implements OnInit {
   searchForm!: FormGroup;
   expenses: Expense[] = [];
   filteredExpenses: Expense[] = [];
+  editingExpenseId: number | null = null; //For in storage expense on editing
   iconSearch: string = 'assets/icons/search.svg';
   currentPage: number = 0;
   pageSize: number = 5;
@@ -59,7 +62,8 @@ export class ConsultationComponent implements OnInit {
     private fb: FormBuilder,
     private searchExpense: ConsultationService,
     private dbService: DbService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
   ) { }
 
   private initForm(): void {
@@ -120,6 +124,32 @@ export class ConsultationComponent implements OnInit {
     this.dbService.remove(id);
     this.loadAllExpenses(); // Recarrega as despesas após a remoção
     this.snackBar.open('Despesa removida com sucesso!', 'Fechar', { duration: 2000 });
+  }
+
+  editExpense(expense: Expense): void {
+    const dialogRef = this.dialog.open(EditExpenseComponent, {
+      width: '400px',
+      data: expense
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.dbService.grave(result, result.id); // Atualiza os dados no LocalStorage
+        this.loadAllExpenses(); // Recarrega a lista
+        this.snackBar.open('Despesa atualizada com sucesso!', 'Fechar', { duration: 2000 });
+      }
+    });
+  }
+
+  saveExpense(): void {
+    if (this.editingExpenseId !== null) {
+      const updatedExpense: Expense = { id: this.editingExpenseId, ...this.searchForm.value };
+      this.dbService.grave(updatedExpense, this.editingExpenseId);
+      this.editingExpenseId = null; // Reset da edição
+      this.searchForm.reset();
+      this.loadAllExpenses();
+      this.snackBar.open('Despesa atualizada com sucesso!', 'Fechar', { duration: 2000 });
+    }
   }
 
 
