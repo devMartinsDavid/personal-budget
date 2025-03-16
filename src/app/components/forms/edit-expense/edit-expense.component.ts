@@ -55,12 +55,12 @@ export class EditExpenseComponent {
 
   save(): void {
     if (this.editForm.valid) {
-      this.dialogRef.close({ ...this.data, ...this.editForm.value }); // Retorna os dados editados
+      this.dialogRef.close({ ...this.data, ...this.editForm.value }); //return data edited
     }
   }
 
   close(): void {
-    this.dialogRef.close(); // Fecha o modal sem salvar
+    this.dialogRef.close();
   }
 
   getExpenseTypeLabel(): string {

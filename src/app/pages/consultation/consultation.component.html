@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row mb-5">
             <div class="col text-center">
-                <h1 class="display-4">Consulta de despesas</h1>
+                <h1 class="display-4">Expense Consultation</h1>
             </div>
         </div>
 
@@ -12,50 +12,50 @@
                 <form [formGroup]="searchForm">
                     <div class="form-field mb-3">
                         <mat-form-field appearance="fill" class="w-100">
-                            <mat-label>Data</mat-label>
+                            <mat-label>Date</mat-label>
                             <input matInput formControlName="date" [matDatepicker]="picker" />
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                             <mat-error *ngIf="searchForm.get('date')?.hasError('required')">
-                                Date é obrigatória.
+                                Date is required.
                             </mat-error>
                         </mat-form-field>
                     </div>
 
                     <div class="form-field mb-3">
                         <mat-form-field appearance="fill" class="w-100">
-                            <mat-label>Tipo</mat-label>
+                            <mat-label>Type</mat-label>
                             <mat-select formControlName="type">
                                 <mat-option *ngFor="let type of expenseTypes" [value]="type.value">
                                     {{ type.label }}
                                 </mat-option>
                             </mat-select>
                             <mat-error *ngIf="searchForm.get('type')?.hasError('required')">
-                                Tipo é obrigatório.
+                                Type is required.
                             </mat-error>
                         </mat-form-field>
                     </div>
 
                     <div class="form-field mb-3">
                         <mat-form-field appearance="fill" class="w-100">
-                            <mat-label>Descrição</mat-label>
+                            <mat-label>Description</mat-label>
                             <input matInput formControlName="description" />
                             <mat-error *ngIf="searchForm.get('description')?.hasError('required')">
-                                Descrição é obrigatória.
+                                Description is required.
                             </mat-error>
                         </mat-form-field>
                     </div>
 
                     <div class="form-field">
                         <mat-form-field appearance="fill" class="w-100">
-                            <mat-label>Valor R$</mat-label>
+                            <mat-label>Amount R$</mat-label>
                             <input matInput formControlName="value" type="text" currencyMask
                                 [options]="{prefix:'R$', thousands:'.', decimal:',', align:'left', allowNegative: true}" />
                             <mat-error *ngIf="searchForm.get('value')?.hasError('required')">
-                                Valor é obrigatório.
+                                Amount is required.
                             </mat-error>
                             <mat-error *ngIf="searchForm.get('value')?.hasError('pattern')">
-                                Formato inválido (ex: 100.00).
+                                Invalid format (e.g., 100.00).
                             </mat-error>
                         </mat-form-field>
                     </div>
@@ -63,11 +63,11 @@
                 </form>
 
                 <div class="d-flex justify-content-between align-items-center gap-4 mt-1 mb-2">
-                    <div class="buttom-search"  (click)="searchExpenses()">
+                    <div class="buttom-search" (click)="searchExpenses()">
                         <i class="fa-solid fa-magnifying-glass fa-xl"></i>
                     </div>
                     <button class="buttom-clear btn btn-primary" id="clearFiltersButton" style="color: #ffffff;font-weight: bold;"  (click)="searchForm.reset();">
-                        Limpar Filtros <i class="fa fa-eraser" style="color: #fbfdff;"></i>
+                        Clear Filters <i class="fa fa-eraser" style="color: #fbfdff;"></i>
                     </button>
                 </div>
             </div>
@@ -77,10 +77,10 @@
             <table class="table" id="expensesTable">
                 <thead>
                     <tr>
-                        <th>Data</th>
-                        <th>Tipo</th>
-                        <th>Descrição</th>
-                        <th>Valor</th>
+                        <th>Date</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Amount</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -102,8 +102,8 @@
                 </tbody>
             </table>
             <div class="d-flex justify-content-center">
-                <button id="prevPage" class="btn btn-secondary"  (click)="prevPage()" [disabled]="currentPage === 0">Página Anterior</button>
-                <button id="nextPage" class="btn btn-secondary" (click)="nextPage()" [disabled]="(currentPage + 1) * pageSize >= expenses.length">Próxima Página</button>
+                <button id="prevPage" class="btn btn-secondary" (click)="prevPage()" [disabled]="currentPage === 0">Previous Page</button>
+                <button id="nextPage" class="btn btn-secondary" (click)="nextPage()" [disabled]="(currentPage + 1) * pageSize >= expenses.length">Next Page</button>
             </div>
         </div>
     </div>
