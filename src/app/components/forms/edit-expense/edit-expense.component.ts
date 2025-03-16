@@ -35,11 +35,11 @@ export class EditExpenseComponent {
   editForm: FormGroup;
 
   expenseTypes = [
-    { value: 'alimentação', label: 'Alimentação' },
-    { value: 'educação', label: 'Educação' },
-    { value: 'lazer', label: 'Lazer' },
-    { value: 'saúde', label: 'Saúde' },
-    { value: 'transporte', label: 'Transporte' },
+    { value: 'food', label: 'food' },
+    { value: 'education', label: 'education' },
+    { value: 'leisure', label: 'leisure' },
+    { value: 'health', label: 'health' },
+    { value: 'transport', label: 'transport' },
   ];
 
   constructor( private fb: FormBuilder,
