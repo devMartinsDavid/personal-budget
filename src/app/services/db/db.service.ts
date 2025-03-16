@@ -12,10 +12,10 @@ export class DbService {
     return nextId ? parseInt(nextId, 10) + 1 : 1;
   }
 
-  grave(expense: Expense): void {
-    const id = this.getNextId();
-    localStorage.setItem(id.toString(), JSON.stringify(expense));
-    localStorage.setItem('id', id.toString());
+  grave(expense: Expense, id?: number): void {
+    const expenseId = id ??  this.getNextId();
+    localStorage.setItem(expenseId.toString(), JSON.stringify(expense));
+    localStorage.setItem('id', Math.max(expenseId, parseInt(localStorage.getItem('id') || '0', 10)).toString());
   }
 
   retrieveAllRecords(): Expense[] {

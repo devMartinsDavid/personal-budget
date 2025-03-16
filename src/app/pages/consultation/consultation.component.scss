@@ -20,3 +20,20 @@
 .buttom-search:hover .fa-magnifying-glass {
     color: #1E90FF;
 }
+
+.buttom-delete {
+    margin-right: 10px;
+}
+
+.buttom-delete,
+.buttom-edit {
+    margin-right: 10px;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+}
+
+.buttom-delete:hover,
+.buttom-edit:hover {
+    transform: scale(1.2);
+}
+
