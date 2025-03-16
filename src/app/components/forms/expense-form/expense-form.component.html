@@ -1,4 +1,4 @@
-<form [formGroup]="expenseForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="expenseForm" (ngSubmit)="onSubmit()" id="form-container">
     <div class="form-field">
         <mat-form-field appearance="fill">
             <mat-label>Date</mat-label>
@@ -6,51 +6,51 @@
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
             <mat-error *ngIf="expenseForm.get('date')?.hasError('required')">
-                Data é obrigatória.
+                Date is required.
             </mat-error>
         </mat-form-field>
     </div>
 
     <div class="form-field">
         <mat-form-field appearance="fill">
-            <mat-label>Tipo</mat-label>
+            <mat-label>Type</mat-label>
             <mat-select formControlName="type">
                 <mat-option *ngFor="let type of expenseTypes" [value]="type.value">
                     {{ type.label }}
                 </mat-option>
             </mat-select>
             <mat-error *ngIf="expenseForm.get('type')?.hasError('required')">
-                Tipo é obrigatório.
+                Type is required.
             </mat-error>
         </mat-form-field>
     </div>
 
     <div class="form-field">
         <mat-form-field appearance="fill">
-            <mat-label>Descrição</mat-label>
+            <mat-label>Description</mat-label>
             <input matInput formControlName="description" />
             <mat-error *ngIf="expenseForm.get('description')?.hasError('required')">
-                Descrição é obrigatória.
+                Description is required.
             </mat-error>
         </mat-form-field>
     </div>
 
     <div class="form-field">
         <mat-form-field appearance="fill">
-            <mat-label>Valor R$</mat-label>
+            <mat-label>Value (R$)</mat-label>
             <input matInput formControlName="value" type="text" currencyMask [options]="{prefix:'R$', thousands:'.', decimal:',', align:'left', allowNegative: true}" />
             <mat-error *ngIf="expenseForm.get('value')?.hasError('required')">
-                Valor é obrigatório.
+                Amount is required.
             </mat-error>
             <mat-error *ngIf="expenseForm.get('value')?.hasError('pattern')">
-                Formato inválido (ex: 100.00).
+                Invalid format (e.g., 100.00).
             </mat-error>
         </mat-form-field>
     </div>
 
     <div class="form-actions">
         <button mat-raised-button color="primary" type="submit" [disabled]="expenseForm.invalid">
-            Salvar
+            Save
         </button>
     </div>
 </form>

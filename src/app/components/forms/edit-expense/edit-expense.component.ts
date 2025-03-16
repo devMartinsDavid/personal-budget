@@ -59,9 +59,7 @@ export class EditExpenseComponent {
     }
   }
 
-  close(): void {
-    this.dialogRef.close();
-  }
+  close(): void { this.dialogRef.close(); }
 
   getExpenseTypeLabel(): string {
     const selectedType = this.expenseTypes.find(option => option.value === this.editForm.value.type);

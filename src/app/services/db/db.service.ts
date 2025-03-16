@@ -12,7 +12,7 @@ export class DbService {
     return nextId ? parseInt(nextId, 10) + 1 : 1;
   }
 
-  grave(expense: Expense, id?: number): void {
+  save(expense: Expense, id?: number): void {
     const expenseId = id ??  this.getNextId();
     localStorage.setItem(expenseId.toString(), JSON.stringify(expense));
     localStorage.setItem('id', Math.max(expenseId, parseInt(localStorage.getItem('id') || '0', 10)).toString());
@@ -28,7 +28,7 @@ export class DbService {
       if (expense === null) {
         continue;
       }
-      expense.id = i; // Adiciona o ID ao objeto de despesa
+      expense.id = i;
       expenses.push(expense);
     }
 

@@ -134,8 +134,8 @@ export class ConsultationComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.dbService.grave(result, result.id); // update data in localstorage
-        this.loadAllExpenses(); // Recarrega a lista
+        this.dbService.save(result, result.id); // update data in localstorage
+        this.loadAllExpenses(); // Reload the list
         this.snackBar.open('Expense updated successfully!', 'Close', { duration: 2000 });
       }
     });
@@ -144,7 +144,7 @@ export class ConsultationComponent implements OnInit {
   saveExpense(): void {
     if (this.editingExpenseId !== null) {
       const updatedExpense: Expense = { id: this.editingExpenseId, ...this.searchForm.value };
-      this.dbService.grave(updatedExpense, this.editingExpenseId);
+      this.dbService.save(updatedExpense, this.editingExpenseId);
       this.editingExpenseId = null; // Reset the edition
       this.searchForm.reset();
       this.loadAllExpenses();

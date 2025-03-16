@@ -26,7 +26,7 @@ export class SumComponent {
   sumExpensesByType(event: Event): void {
     this.selectedType = (event.target as HTMLSelectElement).value;
 
-    console.log('Tipo selecionado:', this.selectedType);
+    console.log('type selected:', this.selectedType);
 
     if (this.selectedType) {
       this.total = this.sumService.sumByType(this.selectedType);

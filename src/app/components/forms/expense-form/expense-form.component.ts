@@ -39,13 +39,13 @@ import { CurrencyMaskModule } from "ng2-currency-mask";
 export class ExpenseFormComponent implements OnInit {
   expenseForm!: FormGroup;
 
-  // Opções para o campo "type"
+  // Options for input "type"
   expenseTypes = [
-    { value: 'alimentação', label: 'Alimentação' },
-    { value: 'educação', label: 'Educação' },
-    { value: 'lazer', label: 'Lazer' },
-    { value: 'saúde', label: 'Saúde' },
-    { value: 'transporte', label: 'Transporte' },
+    { value: 'food', label: 'Food' },
+    { value: 'education', label: 'Education' },
+    { value: 'leisure', label: 'Leisure' },
+    { value: 'health', label: 'Health' },
+    { value: 'transport', label: 'Transport' },
   ];
 
   constructor(
@@ -75,16 +75,16 @@ export class ExpenseFormComponent implements OnInit {
         value: parseFloat(rawValue),
 
       };
-      this.dbService.grave(expense);
+      this.dbService.save(expense);
       this.expenseForm.reset();
-      this.snackBar.open('Despesa salva com sucesso!', 'X', {
+      this.snackBar.open('Expense successfully saved!', 'X', {
         duration: 3000,
         verticalPosition: 'top',
         horizontalPosition: 'center',
         panelClass: ['custom-snackbar']
       });
     } else {
-      this.snackBar.open('Erro ao salvar. Verifique os campos obrigatórios.', 'X', {
+      this.snackBar.open('Error saving. Please check the required fields.', 'X', {
         duration: 5000,
       });
     }
