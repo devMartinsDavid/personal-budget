@@ -48,13 +48,13 @@ export class ConsultationComponent implements OnInit {
   currentPage: number = 0;
   pageSize: number = 5;
 
-  // Opções para o campo "type"
+  // Options to input "type"
   expenseTypes = [
-    { value: 'alimentação', label: 'Alimentação' },
-    { value: 'educação', label: 'Educação' },
-    { value: 'lazer', label: 'Lazer' },
-    { value: 'saúde', label: 'Saúde' },
-    { value: 'transporte', label: 'Transporte' },
+    { value: 'food', label: 'food' },
+    { value: 'education', label: 'education' },
+    { value: 'leisure', label: 'leisure' },
+    { value: 'health', label: 'health' },
+    { value: 'transport', label: 'transport' },
   ];
 
 
@@ -81,7 +81,7 @@ export class ConsultationComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
-    // Garante que o código só será executado no navegador
+    //Ensures that code will only run in the browser
     if (typeof window !== 'undefined') {
       this.loadAllExpenses();
     }
@@ -108,22 +108,22 @@ export class ConsultationComponent implements OnInit {
 
   searchExpenses(): void {
     const filters = this.searchForm.value;
-    const hasFilters = Object.values(filters).some(value => value); // Verifica se algum campo foi preenchido
+    const hasFilters = Object.values(filters).some(value => value); // check if some input was filled
 
     if (!hasFilters) {
-      this.loadAllExpenses(); // Retorna todas as despesas se não houver filtros
+      this.loadAllExpenses(); // Return all expenses if there are no filters
       return;
     }
 
     this.expenses = this.searchExpense.search(filters);
-    this.currentPage = 0; // Reseta a página ao buscar
+    this.currentPage = 0; // reset page in search
     this.applyPagination();
   }
 
   removeExpense(id:number): void {
     this.dbService.remove(id);
-    this.loadAllExpenses(); // Recarrega as despesas após a remoção
-    this.snackBar.open('Despesa removida com sucesso!', 'Fechar', { duration: 2000 });
+    this.loadAllExpenses(); // Recharge expenses after removal
+    this.snackBar.open('expense successfully removed!', 'Close', { duration: 2000 });
   }
 
   editExpense(expense: Expense): void {
@@ -134,9 +134,9 @@ export class ConsultationComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.dbService.grave(result, result.id); // Atualiza os dados no LocalStorage
+        this.dbService.grave(result, result.id); // update data in localstorage
         this.loadAllExpenses(); // Recarrega a lista
-        this.snackBar.open('Despesa atualizada com sucesso!', 'Fechar', { duration: 2000 });
+        this.snackBar.open('Expense updated successfully!', 'Close', { duration: 2000 });
       }
     });
   }
@@ -145,10 +145,10 @@ export class ConsultationComponent implements OnInit {
     if (this.editingExpenseId !== null) {
       const updatedExpense: Expense = { id: this.editingExpenseId, ...this.searchForm.value };
       this.dbService.grave(updatedExpense, this.editingExpenseId);
-      this.editingExpenseId = null; // Reset da edição
+      this.editingExpenseId = null; // Reset the edition
       this.searchForm.reset();
       this.loadAllExpenses();
-      this.snackBar.open('Despesa atualizada com sucesso!', 'Fechar', { duration: 2000 });
+      this.snackBar.open('Expense updated successfully!', 'Close', { duration: 2000 });
     }
   }
 
