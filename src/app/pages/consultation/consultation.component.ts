@@ -152,5 +152,11 @@ export class ConsultationComponent implements OnInit {
     }
   }
 
+  clearFilters(): void {
+    this.searchForm.reset();
+    this.loadAllExpenses();
+    this.snackBar.open('Filters cleared!', 'Close', { duration: 2000 });
+  }
+
 
 }
