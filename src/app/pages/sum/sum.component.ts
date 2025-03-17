@@ -15,7 +15,8 @@ import { SumExpensesService } from '../../services/expenses/sum-expenses.service
 export class SumComponent {
   total: number = 0;
   allTotals: { type: string, total: number }[] = [];
-   selectedType: string = ''
+  selectedType: string = ''
+  hasExpenses: boolean = false;
 
   constructor(private sumService: SumExpensesService) {}
 
@@ -25,8 +26,6 @@ export class SumComponent {
 
   sumExpensesByType(event: Event): void {
     this.selectedType = (event.target as HTMLSelectElement).value;
-
-    console.log('type selected:', this.selectedType);
 
     if (this.selectedType) {
       this.total = this.sumService.sumByType(this.selectedType);
