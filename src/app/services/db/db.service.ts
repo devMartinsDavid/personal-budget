@@ -20,21 +20,28 @@ export class DbService {
 
   retrieveAllRecords(): Expense[] {
     const expenses: Expense[] = [];
-    const id = localStorage.getItem('id');
-    const maxId = id ? parseInt(id, 10) : 0;
 
-    for (let i = 1; i <= maxId; i++) {
-      const expense = JSON.parse(localStorage.getItem(i.toString()) || 'null') as Expense;
-      if (expense === null) {
-        continue;
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const id = localStorage.getItem('id');
+      const maxId = id ? parseInt(id, 10) : 0;
+
+      for (let i = 1; i <= maxId; i++) {
+        const expense = JSON.parse(localStorage.getItem(i.toString()) || 'null') as Expense;
+        if (expense === null) {
+          continue;
+        }
+        expense.id = i;
+        expenses.push(expense);
       }
-      expense.id = i;
-      expenses.push(expense);
+
+      console.log('Despesas recuperadas:', expenses);
+    } else {
+      console.warn('localStorage não está disponível ou não foi carregado corretamente');
     }
 
-    console.log('Despesas recuperadas:', expenses);
     return expenses;
   }
+
 
   search(filters: Partial<Expense>): Expense[] {
     const allRecords = this.retrieveAllRecords();
