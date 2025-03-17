@@ -39,6 +39,12 @@
                     </tr>
                 </tbody>
 
+                 <tbody *ngIf="message">
+                    <tr>
+                        <td colspan="2" class="text-center">{{ message }}</td>
+                    </tr>
+                </tbody>
+
                 <tbody *ngIf="total > 0 && allTotals.length === 0">
                     <tr>
                         <td> {{ selectedType }} </td>
