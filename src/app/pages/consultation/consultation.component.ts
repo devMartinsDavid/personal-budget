@@ -75,7 +75,7 @@ export class ConsultationComponent implements OnInit {
     });
   }
   private loadAllExpenses(): void {
-    this.expenses = this.searchExpense.retrieveAllRecords();
+    this.expenses = this.dbService.retrieveAllRecords();
     this.applyPagination();
   }
 

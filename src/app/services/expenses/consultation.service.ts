@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Expense } from './../../interfaces/expense.interface';
+import { DbService } from '../db/db.service';
 
 
 @Injectable({
@@ -7,10 +8,10 @@ import { Expense } from './../../interfaces/expense.interface';
 })
 export class ConsultationService {
 
-  constructor() { }
+  constructor(private dbService: DbService) { }
 
   search(filters: Partial<Expense>): Expense[] {
-    const allRecords = this.retrieveAllRecords();
+    const allRecords = this.dbService.retrieveAllRecords(); // Use o método do DbService
 
     return allRecords.filter(expense => {
       return Object.keys(filters).every(key => {
@@ -18,14 +19,12 @@ export class ConsultationService {
         const expenseValue = expense[key as keyof Expense];
 
         if (!filterValue) {
-          return true; // Se o filtro estiver vazio, mantém o registro
+          return true;
         }
 
         if (key === 'date') {
-
           const filterDate = new Date(filterValue as string).toISOString().split('T')[0];
           const expenseDate = new Date(expenseValue as string).toISOString().split('T')[0];
-
           return filterDate === expenseDate;
         }
 
@@ -37,21 +36,5 @@ export class ConsultationService {
       });
     });
   }
-
-  retrieveAllRecords(): Expense[] {
-    const expenses: Expense[] = [];
-    const id = localStorage.getItem('id');
-    const maxId = id ? parseInt(id, 10) : 0;
-
-    for (let i = 1; i <= maxId; i++) {
-      const expense = JSON.parse(localStorage.getItem(i.toString()) || 'null') as Expense;
-      if (expense === null) {
-        continue;
-      }
-      expense.id = i;
-      expenses.push(expense);
-    }
-
-    return expenses;
-  }
+  
 }

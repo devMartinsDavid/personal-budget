@@ -1,12 +1,14 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Expense } from '../../interfaces/expense.interface';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DbService {
 
-  constructor() { }
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) { }
+
   getNextId(): number {
     const nextId = localStorage.getItem('id');
     return nextId ? parseInt(nextId, 10) + 1 : 1;
@@ -21,22 +23,20 @@ export class DbService {
   retrieveAllRecords(): Expense[] {
     const expenses: Expense[] = [];
 
-    if (typeof window !== 'undefined' && window.localStorage) {
+    // check (client-side)
+    if (isPlatformBrowser(this.platformId)) {
       const id = localStorage.getItem('id');
       const maxId = id ? parseInt(id, 10) : 0;
 
       for (let i = 1; i <= maxId; i++) {
         const expense = JSON.parse(localStorage.getItem(i.toString()) || 'null') as Expense;
-        if (expense === null) {
-          continue;
-        }
+
+        if (expense === null) { continue; }
+
         expense.id = i;
         expenses.push(expense);
       }
 
-      console.log('Despesas recuperadas:', expenses);
-    } else {
-      console.warn('localStorage não está disponível ou não foi carregado corretamente');
     }
 
     return expenses;
