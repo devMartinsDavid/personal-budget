@@ -33,7 +33,7 @@
                         <td>{{ item.type }}</td>
                         <td>{{ item.total | currency: 'BRL' }}</td>
                     </tr>
-                    <tr>
+                    <tr *ngIf="!selectedType">
                         <td><strong>Grand Total</strong></td>
                         <td><strong>{{ total | currency:'BRL' }}</strong></td>
                     </tr>
