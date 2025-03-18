@@ -136,7 +136,12 @@ export class ConsultationComponent implements OnInit {
       if (result) {
         this.dbService.save(result, result.id); // update data in localstorage
         this.loadAllExpenses(); // Reload the list
-        this.snackBar.open('Expense updated successfully!', 'Close', { duration: 2000 });
+        this.snackBar.open('Expense updated successfully!', 'X', {
+          duration: 2000,
+          verticalPosition: 'top',
+          horizontalPosition: 'center',
+          panelClass: ['custom-snackbar']
+        });
       }
     });
   }
