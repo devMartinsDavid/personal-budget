@@ -50,9 +50,7 @@ export class ExpenseFormComponent implements OnInit {
     private snackBar: MatSnackBar
   ) {}
 
-  ngOnInit(): void {
-    this.initForm();
-  }
+  ngOnInit(): void { this.initForm(); }
 
   private initForm(): void {
     this.expenseForm = this.fb.group({

@@ -10,7 +10,7 @@ import { RouterLink } from '@angular/router';
 export class NavbarComponent {
   @ViewChild('navbarCollapse', { static: false }) navbarCollapse!: ElementRef;
 
-  logo:string = "assets/images/logo4.png";
+  logo:string = "assets/images/logo7.svg";
 
 
   closeMenu() {

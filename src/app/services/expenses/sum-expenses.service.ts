@@ -12,11 +12,10 @@ export class SumExpensesService {
 
   constructor(
     private dbService: DbService,
-  ) {}
+  ) { }
 
   getAllExpenses(): Expense[] {
     const expenses = this.dbService.retrieveAllRecords();
-    console.log('Despesas carregadas do DBService:', expenses);
     return expenses;
   }
 
@@ -26,7 +25,6 @@ export class SumExpensesService {
       .filter(expense => expense.type.toLowerCase() === type.toLowerCase())
       .reduce((sum, expense) => sum + expense.value, 0);
 
-    console.log(`Total para ${type}:`, total); // Debug
     return total;
   }
 
@@ -42,9 +40,8 @@ export class SumExpensesService {
     });
 
     const sumsByType = Array.from(sumMap.entries()).map(([type, total]) => ({ type, total }));
-    console.log('Soma total de todas as despesas:', sumsByType); // Debug
 
     return { sumsByType, totalAll };
   }
 
- }
+}
