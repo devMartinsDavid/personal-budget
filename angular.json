@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
-  "newProjectRoot": "projects",
+  "newProjectRoot": "PersonalBudget",
   "projects": {
     "personal-budget": {
       "projectType": "application",
@@ -17,7 +17,8 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/personal-budget",
+            "outputPath": "dist",
+            "baseHref": "/personal-budget/",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
